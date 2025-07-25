@@ -1,15 +1,14 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
+import Link from "next/link";
+import { AuthProvider } from "@/context/auth";
+import AuthButtons from "@/components/auth-buttons";
+import { HomeIcon } from "lucide-react";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const poppins = Poppins({
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });
 
 export const metadata: Metadata = {
@@ -24,10 +23,32 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+      <body className={`${poppins.className} antialiased`}>
+        <AuthProvider>
+          <nav className="bg-sky-950 text-white p-5 h-24 flex items-center justify-between">
+            <Link
+              href="/"
+              className="text-3xl uppercase tracking-widest flex gap-2 items-center"
+            >
+              <HomeIcon />
+              <span>Firebase Homes</span>
+            </Link>
+            <ul className="flex gap-6 items-center">
+              <li>
+                <Link
+                  href="/property-search"
+                  className="tracking-widest uppercase hover:underline"
+                >
+                  Property Search
+                </Link>
+              </li>
+              <li>
+                <AuthButtons />
+              </li>
+            </ul>
+          </nav>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

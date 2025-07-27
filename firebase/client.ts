@@ -7,7 +7,7 @@ import { FirebaseStorage, getStorage } from "firebase/storage";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyABDQ6PiULQv1dSZLFMlzHDw1_YerHhk54",
+  apiKey: process.env.FIREBASE_APIKEY,
   authDomain: "fir-nextjs-demo-3f5a3.firebaseapp.com",
   projectId: "fir-nextjs-demo-3f5a3",
   storageBucket: "fir-nextjs-demo-3f5a3.firebasestorage.app",

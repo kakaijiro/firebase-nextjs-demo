@@ -1,9 +1,12 @@
 import { Breadcrumbs } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
+import { getProperties } from "@/data/properties";
 import { PlusCircleIcon } from "lucide-react";
 import Link from "next/link";
 
-export default function Page() {
+export default async function Page() {
+  const data = await getProperties();
+  console.log({ data });
   return (
     <div>
       <Breadcrumbs

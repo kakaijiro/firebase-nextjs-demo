@@ -1,12 +1,16 @@
 import { Breadcrumbs } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
-import { getProperties } from "@/data/properties";
 import { PlusCircleIcon } from "lucide-react";
 import Link from "next/link";
+import PropertyTable from "./properties-table";
 
-export default async function Page() {
-  const data = await getProperties();
-  console.log({ data });
+export default async function Page({
+  searchParams,
+}: {
+  searchParams?: Promise<any>;
+}) {
+  const searchParamsValue = await searchParams;
+  console.log({ searchParamsValue });
   return (
     <div>
       <Breadcrumbs
@@ -23,6 +27,9 @@ export default async function Page() {
           New Property
         </Link>
       </Button>
+      <PropertyTable
+        page={searchParamsValue?.page ? parseInt(searchParamsValue.page) : 1}
+      />
     </div>
   );
 }

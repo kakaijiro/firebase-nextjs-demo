@@ -1,4 +1,5 @@
-import { firestore } from "@/firebase/server";
+import { firestore, getTotalPages } from "@/firebase/server";
+import { Property } from "@/types/property";
 import { PropertyStatus } from "@/types/propertyStatus";
 import "server-only";
 
@@ -30,13 +31,34 @@ export const getProperties = async (options?: GetPropertiesOptions) => {
   if (minBedrooms !== null && minBedrooms !== undefined)
     propertiesQuery = propertiesQuery.where("bedrooms", ">=", minBedrooms);
   if (status) propertiesQuery = propertiesQuery.where("status", "in", status);
+
+  const totalPages = await getTotalPages(propertiesQuery, pageSize);
+
   const propertiesSnapshot = await propertiesQuery
     .limit(pageSize)
     .offset((page - 1) * pageSize)
     .get();
-  const properties = propertiesSnapshot.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  }));
-  return { data: properties };
+
+  const properties = propertiesSnapshot.docs.map(
+    (doc) =>
+      ({
+        id: doc.id,
+        ...doc.data(),
+      } as Property)
+  );
+  return { data: properties, totalPages };
+};
+
+export const getPropertyById = async (propertyId: string) => {
+  const propertySnapshot = await firestore
+    .collection("properties")
+    .doc(propertyId)
+    .get();
+
+  const propertyData = {
+    id: propertySnapshot.id,
+    ...propertySnapshot.data(),
+  } as Property;
+
+  return propertyData;
 };

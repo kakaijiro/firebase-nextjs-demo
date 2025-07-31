@@ -12,8 +12,10 @@ import {
 import { Avatar, AvatarFallback } from "./ui/avatar";
 import Image from "next/image";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function AuthButtons() {
+  const router = useRouter();
   const auth = useAuth();
   const [imageError, setImageError] = useState(false);
 
@@ -59,7 +61,12 @@ export default function AuthButtons() {
                 <Link href="/account/my-favourites">My Favourites</Link>
               </DropdownMenuItem>
             )}
-            <DropdownMenuItem onClick={async () => auth.logout()}>
+            <DropdownMenuItem
+              onClick={async () => {
+                await auth.logout();
+                router.refresh();
+              }}
+            >
               Logout
             </DropdownMenuItem>
           </DropdownMenuContent>

@@ -12,6 +12,14 @@ export async function middleware(request: NextRequest) {
   const cookieStore = await cookies();
   const token = cookieStore.get("firebaseAuthToken")?.value;
 
+  // if have not logged in yet
+  if (!token && request.nextUrl.pathname.startsWith("/login"))
+    return NextResponse.next();
+
+  // if already logged in
+  if (token && request.nextUrl.pathname.startsWith("/login"))
+    return NextResponse.redirect(new URL("/", request.url));
+
   // if token is empty
   if (!token) return NextResponse.redirect(new URL("/", request.url)); // redirect() takes an absolute path
 
@@ -25,5 +33,5 @@ export async function middleware(request: NextRequest) {
 
 // middleware only applies for:
 export const config = {
-  matcher: ["/admin-dashboard"],
+  matcher: ["/admin-dashboard", "/admin-dashboard/:path*", "/login"],
 };

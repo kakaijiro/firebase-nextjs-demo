@@ -13,12 +13,10 @@ type Props = {
   bathrooms: number;
   description: string;
   status: "draft" | "for-sale" | "withdrawn" | "sold";
-  token: string;
 };
 
-export const saveNewProperty = async (data: Props) => {
-  const { token, ...propertyData } = data;
-  const verifiedToken = await auth.verifyIdToken(token);
+export const createProperty = async (data: Props, authToken: string) => {
+  const verifiedToken = await auth.verifyIdToken(authToken);
 
   if (!verifiedToken.admin) {
     return {
@@ -27,7 +25,7 @@ export const saveNewProperty = async (data: Props) => {
     };
   }
 
-  const validation = propertyDataSchema.safeParse(propertyData);
+  const validation = propertyDataSchema.safeParse(data);
   if (!validation.success) {
     return {
       error: true,
@@ -38,7 +36,7 @@ export const saveNewProperty = async (data: Props) => {
   }
 
   const property = await firestore.collection("properties").add({
-    ...propertyData,
+    ...data,
     created: new Date(),
     updated: new Date(),
   });

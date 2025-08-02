@@ -6,7 +6,7 @@ import EditPropertyForm from "./edit-property-form";
 export default async function page({ params }: { params: Promise<any> }) {
   const paramsValue = await params;
   const property = await getPropertyById(paramsValue.propertyId);
-  console.log({ property });
+
   return (
     <div>
       <Breadcrumbs

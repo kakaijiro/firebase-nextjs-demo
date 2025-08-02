@@ -2,7 +2,6 @@
 
 import { auth, firestore } from "@/firebase/server";
 import { propertyDataSchema } from "@/validation/propertySchema";
-import z from "zod";
 
 type Props = {
   address1: string;

@@ -120,3 +120,39 @@
     @apply bg-background text-foreground;
   }
 }
+
+.property-description h1 {
+  @apply text-5xl font-bold my-4;
+}
+
+.property-description h2 {
+  @apply text-4xl font-bold my-4;
+}
+
+.property-description h3 {
+  @apply text-3xl font-bold my-4;
+}
+
+.property-description h4 {
+  @apply text-2xl font-bold my-4;
+}
+
+.property-description h5 {
+  @apply text-xl font-bold my-4;
+}
+
+.property-description h6 {
+  @apply text-lg font-bold my-4;
+}
+
+.property-description p {
+  @apply my-4 font-normal text-base;
+}
+
+.property-description ul {
+  @apply list-disc my-4 ml-4;
+}
+
+.property-description ol {
+  @apply list-decimal my-4 ml-4;
+}

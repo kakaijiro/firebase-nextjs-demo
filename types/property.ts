@@ -11,4 +11,5 @@ export type Property = {
   bathrooms: number;
   description: string;
   status: PropertyStatus;
+  images?: string[];
 };

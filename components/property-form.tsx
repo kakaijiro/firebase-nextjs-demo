@@ -214,6 +214,14 @@ export default function PropertyForm({
                     form.setValue("images", images);
                   }}
                   images={field.value}
+                  urlFormatter={(image) => {
+                    if (!image.file) {
+                      return `https://firebasestorage.googleapis.com/v0/b/fir-nextjs-demo-3f5a3.firebasestorage.app/o/${encodeURIComponent(
+                        image.url
+                      )}?alt=media`;
+                    }
+                    return image.url;
+                  }}
                 />
               </FormControl>
               <FormMessage />

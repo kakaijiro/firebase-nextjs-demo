@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+// used in server
 export const propertyDataSchema = z.object({
   address1: z.string().min(1, "Address line must contain a value"),
   address2: z.string().optional(),
@@ -16,3 +17,17 @@ export const propertyDataSchema = z.object({
   bathrooms: z.coerce.number().min(0, "Bathrooms must be at least zero"),
   status: z.enum(["draft", "for-sale", "withdrawn", "sold"]),
 });
+
+// for browser only
+export const propertyImagesSchema = z.object({
+  images: z.array(
+    z.object({
+      id: z.string(),
+      url: z.string(),
+      file: z.instanceof(File).optional(),
+    })
+  ),
+});
+
+// combined 2
+export const propertySchema = propertyDataSchema.and(propertyImagesSchema);

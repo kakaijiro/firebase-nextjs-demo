@@ -3,7 +3,13 @@
 import z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -49,6 +55,7 @@ export default function FilterForm() {
           name="minPrice"
           render={({ field }) => (
             <FormItem>
+              <FormLabel>Minimum Price</FormLabel>
               <FormControl>
                 <Input
                   {...field}
@@ -65,6 +72,7 @@ export default function FilterForm() {
           name="maxPrice"
           render={({ field }) => (
             <FormItem>
+              <FormLabel>Maximum Price</FormLabel>
               <FormControl>
                 <Input
                   {...field}
@@ -81,6 +89,7 @@ export default function FilterForm() {
           name="minBedrooms"
           render={({ field }) => (
             <FormItem>
+              <FormLabel>Minimum Bedrooms</FormLabel>
               <FormControl>
                 <Input
                   {...field}
@@ -92,7 +101,9 @@ export default function FilterForm() {
             </FormItem>
           )}
         />
-        <Button type="submit">Search</Button>
+        <Button type="submit" className="mt-auto">
+          Search
+        </Button>
       </form>
     </Form>
   );

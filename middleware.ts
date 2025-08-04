@@ -13,11 +13,19 @@ export async function middleware(request: NextRequest) {
   const token = cookieStore.get("firebaseAuthToken")?.value;
 
   // if have not logged in yet
-  if (!token && request.nextUrl.pathname.startsWith("/login"))
+  if (
+    !token &&
+    (request.nextUrl.pathname.startsWith("/login") ||
+      request.nextUrl.pathname.startsWith("/register"))
+  )
     return NextResponse.next();
 
   // if already logged in
-  if (token && request.nextUrl.pathname.startsWith("/login"))
+  if (
+    token &&
+    (request.nextUrl.pathname.startsWith("/login") ||
+      request.nextUrl.pathname.startsWith("/register"))
+  )
     return NextResponse.redirect(new URL("/", request.url));
 
   // if token is empty
@@ -33,5 +41,10 @@ export async function middleware(request: NextRequest) {
 
 // middleware only applies for:
 export const config = {
-  matcher: ["/admin-dashboard", "/admin-dashboard/:path*", "/login"],
+  matcher: [
+    "/admin-dashboard",
+    "/admin-dashboard/:path*",
+    "/login",
+    "/register",
+  ],
 };

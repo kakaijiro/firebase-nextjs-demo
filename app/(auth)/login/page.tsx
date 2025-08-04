@@ -1,5 +1,12 @@
-import ContinueWithGoogleButton from "@/components/continue-with-google";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import LoginForm from "./login-form";
+import Link from "next/link";
 
 export default function Page() {
   return (
@@ -8,8 +15,14 @@ export default function Page() {
         <CardTitle className="text-3xl font-bold">Login</CardTitle>
       </CardHeader>
       <CardContent>
-        <ContinueWithGoogleButton />
+        <LoginForm />
       </CardContent>
+      <CardFooter>
+        Don&apos;t have an account?
+        <Link href="/register" className="pl-4 underline hover:bg-slate-50">
+          Register here.
+        </Link>
+      </CardFooter>
     </Card>
   );
 }

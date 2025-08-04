@@ -42,7 +42,7 @@ export default function EditPropertyForm({
     const { images: newImages, ...rest } = data;
     const response = await updateProperty({ ...rest, id }, token);
     if (!!response?.error) {
-      toast.success("Error!", {
+      toast.error("Error!", {
         description: response.message,
       });
       return;

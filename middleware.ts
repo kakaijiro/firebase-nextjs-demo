@@ -14,9 +14,10 @@ export async function middleware(request: NextRequest) {
 
   // if have not logged in yet
   if (
-    !token &&
-    (request.nextUrl.pathname.startsWith("/login") ||
-      request.nextUrl.pathname.startsWith("/register"))
+    (!token &&
+      (request.nextUrl.pathname.startsWith("/login") ||
+        request.nextUrl.pathname.startsWith("/register"))) ||
+    request.nextUrl.pathname.startsWith("/property-search")
   )
     return NextResponse.next();
 
@@ -46,7 +47,16 @@ export async function middleware(request: NextRequest) {
     );
   }
 
-  if (!decodedToken.admin)
+  if (
+    !decodedToken.admin &&
+    request.nextUrl.pathname.startsWith("/admin-dashboard")
+  )
+    return NextResponse.redirect(new URL("/", request.url));
+
+  if (
+    decodedToken.admin &&
+    request.nextUrl.pathname.startsWith("/account/my-favourites")
+  )
     return NextResponse.redirect(new URL("/", request.url));
 
   return NextResponse.next();
@@ -59,5 +69,8 @@ export const config = {
     "/admin-dashboard/:path*",
     "/login",
     "/register",
+    "/account",
+    "/account/:path*",
+    "/property-search",
   ],
 };

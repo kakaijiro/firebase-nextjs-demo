@@ -33,6 +33,19 @@ export async function middleware(request: NextRequest) {
 
   // if token doesn't have the custom claim "admin"
   const decodedToken = decodeJwt(token);
+
+  // if auth token expires within 5 min, request new auth
+  if (decodedToken.exp && (decodedToken.exp - 300) * 1000 < Date.now()) {
+    return NextResponse.redirect(
+      new URL(
+        `/api/refresh-token?redirect=${encodeURIComponent(
+          request.nextUrl.pathname
+        )}`,
+        request.url
+      )
+    );
+  }
+
   if (!decodedToken.admin)
     return NextResponse.redirect(new URL("/", request.url));
 

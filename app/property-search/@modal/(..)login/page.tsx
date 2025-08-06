@@ -18,9 +18,8 @@ export default function LoginModal() {
   return (
     <Dialog
       open
-      onOpenChange={async () => {
-        await loginSuccess(); // it won't invoke a page refresh ...
-        router.back(); // TODO
+      onOpenChange={() => {
+        router.back();
       }}
     >
       <DialogContent>
@@ -31,7 +30,12 @@ export default function LoginModal() {
           </DialogDescription>
         </DialogHeader>
         <div>
-          <LoginForm onSuccess={() => router.back()} />
+          <LoginForm
+            onSuccess={async () => {
+              await loginSuccess();
+              router.back();
+            }}
+          />
         </div>
         <DialogFooter className="block">
           Don&apos;t have an account?

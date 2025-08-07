@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/table";
 import { getUserFavourites } from "@/data/favourites";
 import { getPropertiesById } from "@/data/properties";
-import { EyeIcon, Trash2Icon } from "lucide-react";
+import { EyeIcon } from "lucide-react";
 import Link from "next/link";
 import RemoveFavouriteButton from "./remove-favourite-button";
 import { redirect } from "next/navigation";

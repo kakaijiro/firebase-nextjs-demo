@@ -86,7 +86,7 @@ export default function LoginForm({ onSuccess }: { onSuccess?: () => void }) {
           <div>
             Forgotten your password?
             <Link
-              href="/fogot-password"
+              href="/forgot-password"
               className="pl-4 underline hover:bg-slate-50"
             >
               Reset it here.

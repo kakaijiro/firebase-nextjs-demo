@@ -12,20 +12,26 @@ export async function middleware(request: NextRequest) {
   const cookieStore = await cookies();
   const token = cookieStore.get("firebaseAuthToken")?.value;
 
+  // restructure request.nextUrl.pathname
+  // we can use "pathname" instead of "request.nextUrl.pathname"
+  const { pathname } = request.nextUrl;
+
   // if have not logged in yet
   if (
-    (!token &&
-      (request.nextUrl.pathname.startsWith("/login") ||
-        request.nextUrl.pathname.startsWith("/register"))) ||
-    request.nextUrl.pathname.startsWith("/property-search")
+    !token &&
+    (pathname.startsWith("/login") ||
+      pathname.startsWith("/register") ||
+      pathname.startsWith("/property-search") ||
+      pathname.startsWith("/forgot-password"))
   )
     return NextResponse.next();
 
   // if already logged in
   if (
     token &&
-    (request.nextUrl.pathname.startsWith("/login") ||
-      request.nextUrl.pathname.startsWith("/register"))
+    (pathname.startsWith("/login") ||
+      pathname.startsWith("/register") ||
+      pathname.startsWith("/forgot-password"))
   )
     return NextResponse.redirect(new URL("/", request.url));
 
@@ -39,24 +45,16 @@ export async function middleware(request: NextRequest) {
   if (decodedToken.exp && (decodedToken.exp - 300) * 1000 < Date.now()) {
     return NextResponse.redirect(
       new URL(
-        `/api/refresh-token?redirect=${encodeURIComponent(
-          request.nextUrl.pathname
-        )}`,
+        `/api/refresh-token?redirect=${encodeURIComponent(pathname)}`,
         request.url
       )
     );
   }
 
-  if (
-    !decodedToken.admin &&
-    request.nextUrl.pathname.startsWith("/admin-dashboard")
-  )
+  if (!decodedToken.admin && pathname.startsWith("/admin-dashboard"))
     return NextResponse.redirect(new URL("/", request.url));
 
-  if (
-    decodedToken.admin &&
-    request.nextUrl.pathname.startsWith("/account/my-favourites")
-  )
+  if (decodedToken.admin && pathname.startsWith("/account/my-favourites"))
     return NextResponse.redirect(new URL("/", request.url));
 
   return NextResponse.next();
@@ -69,6 +67,7 @@ export const config = {
     "/admin-dashboard/:path*",
     "/login",
     "/register",
+    "/forgot-password",
     "/account",
     "/account/:path*",
     "/property-search",

@@ -2,8 +2,6 @@
 
 This is a demo application for real estate property search and management, built with Next.js (App Router) and Firebase. It features user authentication, property management, favorites, and an admin dashboard.
 
-![Top Page Image](public/hero.webp)
-
 ## Features
 
 - Firebase Authentication (Email/Password, Google Login)

@@ -1,6 +1,6 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import { Resolver, useForm } from "react-hook-form";
 import { propertySchema } from "@/validation/propertySchema";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -54,7 +54,7 @@ export default function PropertyForm({
     ...defaultValues,
   };
   const form = useForm<FormData>({
-    resolver: zodResolver(propertySchema),
+    resolver: zodResolver(propertySchema) as Resolver<FormData>,
     defaultValues: combinedDefaultValue,
   });
 

@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { auth } from "@/firebase/client";
-import { sendPasswordResetEmail, sendSignInLinkToEmail } from "firebase/auth";
+import { sendPasswordResetEmail } from "firebase/auth";
 import { useState } from "react";
 
 export default function ForgotPasswordForm() {
